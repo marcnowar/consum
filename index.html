@@ -33,25 +33,17 @@
     flex-direction:column;
   }
 
-  .topbar{
-    background:var(--verd);
-    color:#fff;
-    padding:16px 18px;
-    display:flex;
-    flex-direction:column;
-    align-items:center;
-    gap:6px;
-    box-shadow:0 2px 6px rgba(0,0,0,.12);
-    position:sticky;top:0;z-index:10;
+  .logo-float{
+    text-align:center;
+    padding-top:28px;
+    margin-bottom:-56px;
+    position:relative;
+    z-index:5;
   }
-  .topbar img{
-    width:64px;height:64px;
-    display:block;
-  }
-  .logo{
-    font-weight:800;
-    font-size:22px;
-    letter-spacing:-.3px;
+  .logo-float img{
+    width:140px;height:140px;
+    display:inline-block;
+    filter:drop-shadow(0 6px 14px rgba(0,0,0,.25));
   }
 
   /* Indicador de passos */
@@ -77,6 +69,9 @@
     background:#fff;border:1px solid var(--vora);border-radius:18px;
     padding:24px 22px;box-shadow:0 4px 18px rgba(0,0,0,.05);
     animation:pop .3s ease;
+    position:relative;z-index:1;
+    margin-top:56px;
+    padding-top:56px;
   }
   @keyframes pop{from{opacity:0;transform:translateY(8px)}to{opacity:1;transform:none}}
 
@@ -167,11 +162,6 @@
 </head>
 <body>
 
-  <div class="topbar">
-    <img src="heart.gif" alt="cor">
-    <div class="logo">Zona Client</div>
-  </div>
-
   <div id="progress" style="display:none">
     <div class="steplabel" id="steplabel">Pas 1 de 3</div>
     <div class="steps">
@@ -182,6 +172,9 @@
   </div>
 
   <div class="wrap">
+    <div class="logo-float">
+      <img src="heart.gif" alt="cor">
+    </div>
 
     <!-- LOGIN -->
     <section class="card" id="step1">

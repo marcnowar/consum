@@ -331,37 +331,40 @@
     return !(a.right<=b.left || a.left>=b.right || a.bottom<=b.top || a.top>=b.bottom);
   }
 
-  function setupDodge(boxId, onDecide){
+  // dodgerKey: quina opcio ('si' o 'no') fuig; l'altra queda fixa i es pot marcar sempre
+  function setupDodge(boxId, dodgerKey, onDecide){
     var box=document.getElementById(boxId);
     var si=box.querySelector('.opt.si');
     var no=box.querySelector('.opt.no');
+    var dodger=(dodgerKey==='si') ? si : no;
+    var fixed=(dodgerKey==='si') ? no : si;
     var dodge=0;
     var DODGE_LIMIT=3;
 
-    function moveNo(){
+    function moveDodger(){
       dodge++;
       var boxRect={left:0, top:0, right:box.clientWidth, bottom:box.clientHeight};
-      var w=no.offsetWidth, h=no.offsetHeight;
+      var w=dodger.offsetWidth, h=dodger.offsetHeight;
       var maxX=Math.max(0, boxRect.right-w);
       var maxY=Math.max(0, boxRect.bottom-h);
-      var siLeft=si.offsetLeft, siTop=si.offsetTop;
-      var siRect={left:siLeft, top:siTop, right:siLeft+si.offsetWidth, bottom:siTop+si.offsetHeight};
+      var fLeft=fixed.offsetLeft, fTop=fixed.offsetTop;
+      var fRect={left:fLeft, top:fTop, right:fLeft+fixed.offsetWidth, bottom:fTop+fixed.offsetHeight};
 
-      var curLeft=no.offsetLeft, curTop=no.offsetTop;
+      var curLeft=dodger.offsetLeft, curTop=dodger.offsetTop;
       var best=null, bestDist=-1;
       for(var attempt=0; attempt<20; attempt++){
         var x=Math.random()*maxX;
         var y=Math.random()*maxY;
         var cand={left:x, top:y, right:x+w, bottom:y+h};
-        if(rectsOverlap(cand, siRect)) continue;
+        if(rectsOverlap(cand, fRect)) continue;
         var dist=Math.hypot(x-curLeft, y-curTop);
         if(dist>bestDist){ bestDist=dist; best={x:x,y:y}; }
         if(dist>Math.max(maxX,maxY)*0.55) break; // ja s'ha mogut força lluny
       }
       if(!best){ best={x:maxX, y:maxY}; } // fallback: racó oposat
-      no.style.left=best.x+'px';
-      no.style.top=best.y+'px';
-      no.style.right='auto';
+      dodger.style.left=best.x+'px';
+      dodger.style.top=best.y+'px';
+      dodger.style.right='auto';
     }
 
     function select(which){
@@ -370,25 +373,25 @@
       setTimeout(function(){ onDecide(which); }, 160);
     }
 
-    function tryNo(e){
+    function tryDodger(e){
       if(dodge<DODGE_LIMIT){
         if(e){ e.preventDefault(); }
-        moveNo();
+        moveDodger();
       } else {
-        select('no');
+        select(dodgerKey);
       }
     }
 
-    si.addEventListener('click', function(){ select('si'); });
-    no.addEventListener('mouseenter', function(){ if(dodge<DODGE_LIMIT){ moveNo(); } });
-    no.addEventListener('touchstart', tryNo, {passive:false});
-    no.addEventListener('click', tryNo);
+    fixed.addEventListener('click', function(){ select(dodgerKey==='si' ? 'no' : 'si'); });
+    dodger.addEventListener('mouseenter', function(){ if(dodge<DODGE_LIMIT){ moveDodger(); } });
+    dodger.addEventListener('touchstart', tryDodger, {passive:false});
+    dodger.addEventListener('click', tryDodger);
   }
 
-  setupDodge('optsBox1', function(ans){
+  setupDodge('optsBox1', 'no', function(ans){
     showStep(ans==='si' ? 'step5' : 'step4b');
   });
-  setupDodge('optsBox2', function(ans){
+  setupDodge('optsBox2', 'si', function(ans){
     showStep(ans==='si' ? 'step5' : 'step4c');
   });
 </script>

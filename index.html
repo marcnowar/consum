@@ -26,12 +26,14 @@
   html,body{margin:0;padding:0}
   body{
     font-family:-apple-system,BlinkMacSystemFont,"Segoe UI",Roboto,Helvetica,Arial,sans-serif;
-    background:var(--verd);
+    background:var(--gris-clar);
     color:var(--text);
     min-height:100vh;
     display:flex;
     flex-direction:column;
+    transition:background .2s;
   }
+  body.landing{background:var(--verd)}
 
   .logo-float{
     text-align:center;
@@ -160,7 +162,7 @@
   .foot{text-align:center;font-size:11px;color:#9ca3af;padding:18px}
 </style>
 </head>
-<body>
+<body class="landing">
 
   <div id="progress" style="display:none">
     <div class="steplabel" id="steplabel">Pas 1 de 3</div>
@@ -307,6 +309,8 @@
       document.getElementById(ALL_STEPS[i]).style.display='none';
     }
     document.getElementById(id).style.display='block';
+
+    document.body.classList.toggle('landing', id==='step1');
 
     var prog=document.getElementById('progress');
     if(LABELS[id]){

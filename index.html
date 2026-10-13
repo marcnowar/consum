@@ -4,7 +4,7 @@
 <meta charset="utf-8">
 <meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1, user-scalable=no">
 <meta name="theme-color" content="#80BC00">
-<title>Consum</title>
+<title>SúperAmor</title>
 <style>
   :root{
     --verd:#80BC00;
@@ -101,6 +101,7 @@
     background:#fff;
   }
   input[type=text]:focus,input[type=password]:focus{border-color:var(--verd)}
+  input[readonly]{background:var(--gris-clar);color:var(--gris);cursor:default}
 
   .btn{
     width:100%;
@@ -197,7 +198,7 @@
 <body>
 
   <div class="topbar">
-    <div class="logo">Consum<span class="gota">•</span></div>
+    <div class="logo">🛒 SúperAmor <span class="gota">💘</span></div>
   </div>
 
   <div class="steps">
@@ -211,10 +212,10 @@
     <!-- PAS 1: login -->
     <section class="card" id="step1">
       <h1>Hola de nou</h1>
-      <p class="sub">Entra a la teva zona d'usuari Consum.</p>
+      <p class="sub">Entra a la teva zona d'usuari SúperAmor.</p>
       <div class="field">
-        <label for="user">Usuari</label>
-        <input type="text" id="user" placeholder="El teu nom d'usuari" autocomplete="off">
+        <label for="user">Número de client</label>
+        <input type="text" id="user" value="CS-0048217" readonly>
       </div>
       <div class="field">
         <label for="pass">Contrasenya</label>
@@ -229,9 +230,9 @@
       <h1>Termes i condicions</h1>
       <p class="sub">Revisa i accepta per continuar.</p>
       <div class="terms">
-        <h3>Condicions d'ús · Programa Mésgustmés</h3>
+        <h3>Condicions d'ús · Programa SúperAmor</h3>
         <p>1. En accedir a aquest servei, l'usuari confirma que té una gana raonable i unes ganes incontrolables de comprar coses bones.</p>
-        <p>2. Consum es reserva el dret de recomanar-te productes de temporada encara que no els necessitis.</p>
+        <p>2. SúperAmor es reserva el dret de recomanar-te productes de temporada encara que no els necessitis.</p>
         <p>3. Els punts acumulats no es poden bescanviar per felicitat eterna, però gairebé.</p>
         <p>4. L'usuari es compromet a tractar el personal de caixa amb simpatia, educació i, si s'escau, molt de salero.</p>
         <p>5. Qualsevol semblança amb una app real és pura coincidència i molta barra.</p>
@@ -263,7 +264,7 @@
         <div class="emoji">😊</div>
         <h1>T'ho has empassat?</h1>
         <p class="sub">
-          Era broma 😄 Consum no té cap pas així...<br>
+          Era broma 😄 Cap súper té un pas així...<br>
           però jo tenia moltes ganes de saber el teu Instagram.
         </p>
         <div id="igShow" class="igbox" style="display:none">
@@ -274,7 +275,7 @@
 
   </div>
 
-  <div class="foot">Consum · demostració (no és l'app oficial)</div>
+  <div class="foot">SúperAmor · app 100% de broma · marca inventada 😄</div>
 
 <script>
   function setDots(n){

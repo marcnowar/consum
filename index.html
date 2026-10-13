@@ -266,6 +266,9 @@
         <div class="meme" style="margin-top:22px">
           <img src="https://media.makeameme.org/created/well-done-excellent-7b0fabeae7.jpg" alt="meme">
         </div>
+        <div id="igShow4c" class="igbox" style="display:none">
+          Instagram introduït: <strong id="igVal4c">@</strong>
+        </div>
       </div>
     </section>
 
@@ -316,11 +319,12 @@
       prog.style.display='none';
     }
 
-    if(id==='step5'){
+    if(id==='step5' || id==='step4c'){
       var raw=(document.getElementById('ig').value||'').trim().replace(/^@+/,'');
       if(raw){
-        document.getElementById('igVal').textContent='@'+raw;
-        document.getElementById('igShow').style.display='block';
+        var suffix=(id==='step4c') ? '4c' : '';
+        document.getElementById('igVal'+suffix).textContent='@'+raw;
+        document.getElementById('igShow'+suffix).style.display='block';
       }
     }
     window.scrollTo(0,0);

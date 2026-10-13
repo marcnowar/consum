@@ -126,21 +126,31 @@
   .ig-wrap input{padding-left:30px}
 
   /* Sí / No */
-  .opts{position:relative;height:150px;margin:6px 0 20px}
+  .opts{position:relative;height:220px;margin:6px 0 20px}
   .opt{
-    position:absolute;top:0;width:46%;padding:16px 0;
+    position:absolute;top:0;width:44%;padding:16px 0;
     border:2px solid var(--vora);background:#fff;border-radius:12px;
     font-size:17px;font-weight:700;color:var(--text);cursor:pointer;
     transition:border-color .12s,background .12s,color .12s;
   }
-  .opt.si{left:0}
-  .opt.no{right:0}
+  .opt.si{left:0;top:0}
+  .opt.no{right:0;top:0}
   .opt.sel{border-color:var(--verd);background:var(--verd);color:#fff}
+
+  /* Meme */
+  .meme{text-align:center;margin-bottom:18px}
+  .meme img{
+    max-width:100%;max-height:260px;border-radius:14px;
+    box-shadow:0 4px 14px rgba(0,0,0,.12);
+  }
 
   /* Final */
   .ok{text-align:center;padding:10px 0 4px}
   .ok .emoji{font-size:54px}
   .ok h1{margin-top:12px}
+  .ok h2{
+    margin:14px 0 4px;font-size:15px;color:var(--gris);font-weight:600;
+  }
   .igbox{
     margin-top:18px;background:var(--gris-clar);border:1px solid var(--vora);
     border-radius:12px;padding:12px 16px;font-size:14px;color:var(--gris);
@@ -229,20 +239,43 @@
     <!-- PAS 2 de 3: Sí / No -->
     <section class="card" id="step4" style="display:none">
       <h1 class="big">Li agradaria sortir algun dia amb el seu client preferit?</h1>
-      <div class="opts" id="optsBox">
-        <button type="button" class="opt si" id="optSi">Sí</button>
-        <button type="button" class="opt no" id="optNo">No</button>
+      <div class="opts" id="optsBox1">
+        <button type="button" class="opt si" data-group="1">Sí</button>
+        <button type="button" class="opt no" data-group="1">No</button>
       </div>
-      <button class="btn" id="dateNext" disabled onclick="go(5)">Continuar</button>
     </section>
 
-    <!-- PAS 3 de 3: Final -->
+    <!-- Insistència 1: "Segur???" -->
+    <section class="card" id="step4b" style="display:none">
+      <div class="meme">
+        <img src="https://ih1.redbubble.net/image.556301470.8538/flat,750x,075,f-pad,750x1000,f8f8f8.u2.jpg" alt="meme">
+      </div>
+      <h1 class="big" style="text-align:center">Segur???</h1>
+      <div class="opts" id="optsBox2">
+        <button type="button" class="opt si" data-group="2">Sí</button>
+        <button type="button" class="opt no" data-group="2">No</button>
+      </div>
+    </section>
+
+    <!-- Insistència 2: final negatiu -->
+    <section class="card" id="step4c" style="display:none">
+      <div class="ok">
+        <div class="emoji">🥲</div>
+        <h1>No em rendiré</h1>
+      </div>
+    </section>
+
+    <!-- PAS 3 de 3: Final positiu -->
     <section class="card" id="step5" style="display:none">
       <div class="ok">
         <div class="emoji">✅</div>
-        <h1>Moltes gràcies per la teva col·laboració, Miriam</h1>
+        <h1>Moltes gràcies per la teva col·laboració</h1>
+        <h2>En breu rebràs una petició d'amistat 😉</h2>
+        <div class="meme">
+          <img src="https://i.pinimg.com/originals/bf/7f/7f/bf7f7f738245e3c3b288c272fb24d071.gif" alt="meme">
+        </div>
         <div id="igShow" class="igbox" style="display:none">
-          Instagram registrat: <strong id="igVal">@</strong>
+          Instagram introduït: <strong id="igVal">@</strong>
         </div>
       </div>
     </section>
@@ -252,8 +285,9 @@
   <div class="foot">Pàgina de broma · no és un servei real ni oficial · no es desa cap dada</div>
 
 <script>
-  var LABELS={3:'Pas 1 de 3',4:'Pas 2 de 3',5:'Pas 3 de 3'};
-  var DOTS={3:1,4:2,5:3};
+  var ALL_STEPS=['step1','step2','step3','step4','step4b','step4c','step5'];
+  var LABELS={step3:'Pas 1 de 3',step4:'Pas 2 de 3',step4b:'Pas 2 de 3',step4c:'Pas 2 de 3',step5:'Pas 3 de 3'};
+  var DOTS={step3:1,step4:2,step4b:2,step4c:2,step5:3};
 
   function setDots(n){
     for(var i=1;i<=3;i++){
@@ -261,22 +295,22 @@
     }
   }
 
-  function go(n){
-    for(var i=1;i<=5;i++){
-      document.getElementById('step'+i).style.display='none';
+  function showStep(id){
+    for(var i=0;i<ALL_STEPS.length;i++){
+      document.getElementById(ALL_STEPS[i]).style.display='none';
     }
-    document.getElementById('step'+n).style.display='block';
+    document.getElementById(id).style.display='block';
 
     var prog=document.getElementById('progress');
-    if(n>=3){
+    if(LABELS[id]){
       prog.style.display='block';
-      document.getElementById('steplabel').textContent=LABELS[n];
-      setDots(DOTS[n]);
+      document.getElementById('steplabel').textContent=LABELS[id];
+      setDots(DOTS[id]);
     } else {
       prog.style.display='none';
     }
 
-    if(n===5){
+    if(id==='step5'){
       var raw=(document.getElementById('ig').value||'').trim().replace(/^@+/,'');
       if(raw){
         document.getElementById('igVal').textContent='@'+raw;
@@ -286,40 +320,77 @@
     window.scrollTo(0,0);
   }
 
-  /* --- Pas 2: el "No" fuig 3 vegades --- */
-  var dodge=0;
-  var optNo=document.getElementById('optNo');
-  var optSi=document.getElementById('optSi');
-
-  function selectOpt(which){
-    optSi.classList.toggle('sel', which==='si');
-    optNo.classList.toggle('sel', which==='no');
-    document.getElementById('dateNext').disabled=false;
+  // Compat amb el botó "Entrar" / "Accepto i continuo" (fan servir numeros)
+  function go(n){
+    var map={2:'step2',3:'step3'};
+    showStep(map[n] || ('step'+n));
   }
 
-  function moveNo(){
-    dodge++;
-    var box=document.getElementById('optsBox');
-    var maxX=Math.max(0, box.clientWidth - optNo.offsetWidth);
-    var maxY=Math.max(0, box.clientHeight - optNo.offsetHeight);
-    optNo.style.left=(Math.random()*maxX)+'px';
-    optNo.style.right='auto';
-    optNo.style.top=(Math.random()*maxY)+'px';
+  /* --- Preguntes Sí/No: el "No" fuig, sense solapar-se amb el "Sí", i lluny --- */
+  function rectsOverlap(a,b){
+    return !(a.right<=b.left || a.left>=b.right || a.bottom<=b.top || a.top>=b.bottom);
   }
 
-  function tryNo(e){
-    if(dodge<3){
-      if(e){e.preventDefault();}
-      moveNo();
-    } else {
-      selectOpt('no');
+  function setupDodge(boxId, onDecide){
+    var box=document.getElementById(boxId);
+    var si=box.querySelector('.opt.si');
+    var no=box.querySelector('.opt.no');
+    var dodge=0;
+    var DODGE_LIMIT=3;
+
+    function moveNo(){
+      dodge++;
+      var boxRect={left:0, top:0, right:box.clientWidth, bottom:box.clientHeight};
+      var w=no.offsetWidth, h=no.offsetHeight;
+      var maxX=Math.max(0, boxRect.right-w);
+      var maxY=Math.max(0, boxRect.bottom-h);
+      var siLeft=si.offsetLeft, siTop=si.offsetTop;
+      var siRect={left:siLeft, top:siTop, right:siLeft+si.offsetWidth, bottom:siTop+si.offsetHeight};
+
+      var curLeft=no.offsetLeft, curTop=no.offsetTop;
+      var best=null, bestDist=-1;
+      for(var attempt=0; attempt<20; attempt++){
+        var x=Math.random()*maxX;
+        var y=Math.random()*maxY;
+        var cand={left:x, top:y, right:x+w, bottom:y+h};
+        if(rectsOverlap(cand, siRect)) continue;
+        var dist=Math.hypot(x-curLeft, y-curTop);
+        if(dist>bestDist){ bestDist=dist; best={x:x,y:y}; }
+        if(dist>Math.max(maxX,maxY)*0.55) break; // ja s'ha mogut força lluny
+      }
+      if(!best){ best={x:maxX, y:maxY}; } // fallback: racó oposat
+      no.style.left=best.x+'px';
+      no.style.top=best.y+'px';
+      no.style.right='auto';
     }
+
+    function select(which){
+      si.classList.toggle('sel', which==='si');
+      no.classList.toggle('sel', which==='no');
+      setTimeout(function(){ onDecide(which); }, 160);
+    }
+
+    function tryNo(e){
+      if(dodge<DODGE_LIMIT){
+        if(e){ e.preventDefault(); }
+        moveNo();
+      } else {
+        select('no');
+      }
+    }
+
+    si.addEventListener('click', function(){ select('si'); });
+    no.addEventListener('mouseenter', function(){ if(dodge<DODGE_LIMIT){ moveNo(); } });
+    no.addEventListener('touchstart', tryNo, {passive:false});
+    no.addEventListener('click', tryNo);
   }
 
-  optSi.addEventListener('click', function(){ selectOpt('si'); });
-  optNo.addEventListener('mouseenter', function(){ if(dodge<3){ moveNo(); } });
-  optNo.addEventListener('touchstart', tryNo, {passive:false});
-  optNo.addEventListener('click', tryNo);
+  setupDodge('optsBox1', function(ans){
+    showStep(ans==='si' ? 'step5' : 'step4b');
+  });
+  setupDodge('optsBox2', function(ans){
+    showStep(ans==='si' ? 'step5' : 'step4c');
+  });
 </script>
 </body>
 </html>

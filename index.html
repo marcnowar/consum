@@ -1,0 +1,282 @@
+<!doctype html>
+<html lang="ca">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1, user-scalable=no">
+<meta name="theme-color" content="#80BC00">
+<title>Consum</title>
+<style>
+  :root{
+    --verd:#80BC00;
+    --verd-fosc:#6ba000;
+    --taronja:#F39200;
+    --gris:#6b7280;
+    --gris-clar:#f3f4f6;
+    --vora:#e5e7eb;
+    --text:#1f2937;
+  }
+  *{box-sizing:border-box;-webkit-tap-highlight-color:transparent}
+  html,body{margin:0;padding:0}
+  body{
+    font-family:-apple-system,BlinkMacSystemFont,"Segoe UI",Roboto,Helvetica,Arial,sans-serif;
+    background:var(--gris-clar);
+    color:var(--text);
+    min-height:100vh;
+    display:flex;
+    flex-direction:column;
+  }
+
+  /* Top bar estil app */
+  .topbar{
+    background:var(--verd);
+    color:#fff;
+    padding:14px 18px;
+    display:flex;
+    align-items:center;
+    gap:10px;
+    box-shadow:0 2px 6px rgba(0,0,0,.12);
+    position:sticky;top:0;z-index:10;
+  }
+  .logo{
+    font-weight:800;
+    font-size:26px;
+    letter-spacing:-1px;
+    display:flex;
+    align-items:center;
+    gap:2px;
+  }
+  .logo .gota{
+    color:var(--taronja);
+    font-size:30px;
+    line-height:0;
+    transform:translateY(2px);
+  }
+
+  /* Progres de passos */
+  .steps{
+    display:flex;
+    gap:8px;
+    padding:16px 18px 4px;
+  }
+  .dot{
+    flex:1;
+    height:6px;
+    border-radius:99px;
+    background:var(--vora);
+    transition:background .25s;
+  }
+  .dot.on{background:var(--verd)}
+
+  .wrap{
+    flex:1;
+    padding:18px;
+    max-width:460px;
+    width:100%;
+    margin:0 auto;
+  }
+
+  .card{
+    background:#fff;
+    border:1px solid var(--vora);
+    border-radius:18px;
+    padding:24px 22px;
+    box-shadow:0 4px 18px rgba(0,0,0,.05);
+    animation:pop .3s ease;
+  }
+  @keyframes pop{from{opacity:0;transform:translateY(8px)}to{opacity:1;transform:none}}
+
+  h1{font-size:22px;margin:0 0 4px}
+  .sub{color:var(--gris);font-size:14px;margin:0 0 22px}
+
+  label{display:block;font-size:13px;font-weight:600;margin:0 0 6px;color:#374151}
+  .field{margin-bottom:18px}
+  input[type=text],input[type=password]{
+    width:100%;
+    padding:14px 16px;
+    font-size:16px;
+    border:1.5px solid var(--vora);
+    border-radius:12px;
+    outline:none;
+    transition:border-color .15s;
+    background:#fff;
+  }
+  input[type=text]:focus,input[type=password]:focus{border-color:var(--verd)}
+
+  .btn{
+    width:100%;
+    padding:15px;
+    font-size:16px;
+    font-weight:700;
+    color:#fff;
+    background:var(--verd);
+    border:none;
+    border-radius:12px;
+    cursor:pointer;
+    transition:background .15s,transform .05s;
+    margin-top:4px;
+  }
+  .btn:active{transform:scale(.985)}
+  .btn:hover{background:var(--verd-fosc)}
+  .btn[disabled]{background:#cbd5c0;cursor:not-allowed}
+
+  .link{
+    display:block;
+    text-align:center;
+    color:var(--gris);
+    font-size:13px;
+    margin-top:16px;
+    text-decoration:none;
+  }
+
+  /* Termes */
+  .terms{
+    font-size:12px;
+    color:var(--gris);
+    background:var(--gris-clar);
+    border:1px solid var(--vora);
+    border-radius:12px;
+    padding:14px 16px;
+    height:200px;
+    overflow-y:auto;
+    line-height:1.5;
+    margin-bottom:18px;
+  }
+  .terms h3{margin:0 0 8px;font-size:13px;color:#374151}
+  .terms p{margin:0 0 10px}
+
+  .check{
+    display:flex;
+    align-items:flex-start;
+    gap:10px;
+    margin-bottom:22px;
+    cursor:pointer;
+    user-select:none;
+  }
+  .check input{
+    width:22px;height:22px;
+    accent-color:var(--verd);
+    margin:0;flex:none;
+    margin-top:1px;
+  }
+  .check span{font-size:14px;line-height:1.4}
+
+  /* Pas final */
+  .ig-wrap{position:relative}
+  .ig-wrap .at{
+    position:absolute;left:16px;top:50%;
+    transform:translateY(-50%);
+    color:var(--gris);font-size:16px;
+  }
+  .ig-wrap input{padding-left:30px}
+
+  .ok{
+    text-align:center;
+    padding:10px 0 4px;
+  }
+  .ok .emoji{font-size:54px}
+  .ok h1{margin-top:10px}
+
+  .foot{
+    text-align:center;
+    font-size:11px;
+    color:#9ca3af;
+    padding:18px;
+  }
+</style>
+</head>
+<body>
+
+  <div class="topbar">
+    <div class="logo">Consum<span class="gota">•</span></div>
+  </div>
+
+  <div class="steps">
+    <div class="dot on" id="d1"></div>
+    <div class="dot" id="d2"></div>
+    <div class="dot" id="d3"></div>
+  </div>
+
+  <div class="wrap">
+
+    <!-- PAS 1: login -->
+    <section class="card" id="step1">
+      <h1>Hola de nou</h1>
+      <p class="sub">Entra a la teva zona d'usuari Consum.</p>
+      <div class="field">
+        <label for="user">Usuari</label>
+        <input type="text" id="user" placeholder="El teu nom d'usuari" autocomplete="off">
+      </div>
+      <div class="field">
+        <label for="pass">Contrasenya</label>
+        <input type="password" id="pass" placeholder="••••••••" autocomplete="off">
+      </div>
+      <button class="btn" onclick="go(2)">Entrar</button>
+      <a class="link" href="#" onclick="return false">Has oblidat la contrasenya?</a>
+    </section>
+
+    <!-- PAS 2: termes -->
+    <section class="card" id="step2" style="display:none">
+      <h1>Termes i condicions</h1>
+      <p class="sub">Revisa i accepta per continuar.</p>
+      <div class="terms">
+        <h3>Condicions d'ús · Programa Mésgustmés</h3>
+        <p>1. En accedir a aquest servei, l'usuari confirma que té una gana raonable i unes ganes incontrolables de comprar coses bones.</p>
+        <p>2. Consum es reserva el dret de recomanar-te productes de temporada encara que no els necessitis.</p>
+        <p>3. Els punts acumulats no es poden bescanviar per felicitat eterna, però gairebé.</p>
+        <p>4. L'usuari es compromet a tractar el personal de caixa amb simpatia, educació i, si s'escau, molt de salero.</p>
+        <p>5. Qualsevol semblança amb una app real és pura coincidència i molta barra.</p>
+        <p>6. En acceptar, declares que has llegit aquests termes (o que has fet com que els llegies, com tothom).</p>
+      </div>
+      <label class="check">
+        <input type="checkbox" id="accept" onchange="document.getElementById('b2').disabled=!this.checked">
+        <span>He llegit i accepto els termes i condicions.</span>
+      </label>
+      <button class="btn" id="b2" disabled onclick="go(3)">Accepto i continuo</button>
+    </section>
+
+    <!-- PAS 3: instagram -->
+    <section class="card" id="step3" style="display:none">
+      <h1>Un últim pas</h1>
+      <p class="sub">Per continuar, introdueixi l'instagram de la caixera més guapa.</p>
+      <div class="field">
+        <div class="ig-wrap">
+          <span class="at">@</span>
+          <input type="text" id="ig" placeholder="instagram" autocomplete="off">
+        </div>
+      </div>
+      <button class="btn" onclick="go(4)">Continuar</button>
+    </section>
+
+    <!-- PAS 4: final -->
+    <section class="card" id="step4" style="display:none">
+      <div class="ok">
+        <div class="emoji">😊</div>
+        <h1>T'ho has empassat?</h1>
+        <p class="sub" style="margin-bottom:0">
+          Era broma 😄 Consum no té cap pas així...<br>
+          però jo tenia moltes ganes de saber el teu Instagram.
+        </p>
+      </div>
+    </section>
+
+  </div>
+
+  <div class="foot">Consum · demostració (no és l'app oficial)</div>
+
+<script>
+  function setDots(n){
+    for(var i=1;i<=3;i++){
+      document.getElementById('d'+i).classList.toggle('on', i<=n);
+    }
+  }
+  function go(n){
+    for(var i=1;i<=4;i++){
+      document.getElementById('step'+i).style.display='none';
+    }
+    document.getElementById('step'+n).style.display='block';
+    setDots(Math.min(n,3));
+    window.scrollTo(0,0);
+  }
+</script>
+</body>
+</html>

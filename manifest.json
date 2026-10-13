@@ -1,7 +1,7 @@
 {
-  "name": "SúperAmor",
-  "short_name": "SúperAmor",
-  "description": "App 100% de broma.",
+  "name": "Zona Client",
+  "short_name": "Zona Client",
+  "description": "Àrea privada de client.",
   "start_url": "./index.html",
   "display": "standalone",
   "orientation": "portrait",

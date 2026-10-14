@@ -148,6 +148,16 @@
   .opt.no{right:0;top:0}
   .opt.sel{border-color:var(--verd);background:var(--verd);color:#fff}
 
+  /* Gat de fons al pas 2 */
+  #step4{position:relative;overflow:hidden}
+  #step4>h1,#step4>.opts{position:relative;z-index:1}
+  .cat-bg{
+    position:absolute;left:50%;bottom:14px;
+    transform:translateX(-50%);
+    width:150px;max-width:70%;
+    opacity:.5;pointer-events:none;z-index:0;
+  }
+
   /* Meme */
   .meme{text-align:center;margin-bottom:18px}
   .meme img{
@@ -259,9 +269,7 @@
         <button type="button" class="opt si" data-group="1">Sí</button>
         <button type="button" class="opt no" data-group="1">No</button>
       </div>
-      <div class="meme" style="margin-top:4px;margin-bottom:0">
-        <img src="cat-ask.gif" alt="gatet">
-      </div>
+      <img class="cat-bg" src="cat-ask.gif" alt="">
     </section>
 
     <!-- Insistència 1: "Segur???" -->

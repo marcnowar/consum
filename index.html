@@ -259,6 +259,9 @@
         <button type="button" class="opt si" data-group="1">Sí</button>
         <button type="button" class="opt no" data-group="1">No</button>
       </div>
+      <div class="meme" style="margin-top:4px;margin-bottom:0">
+        <img src="cat-ask.gif" alt="gatet">
+      </div>
     </section>
 
     <!-- Insistència 1: "Segur???" -->
@@ -358,14 +361,14 @@
   }
 
   // dodgerKey: quina opcio ('si' o 'no') fuig; l'altra queda fixa i es pot marcar sempre
-  function setupDodge(boxId, dodgerKey, onDecide){
+  function setupDodge(boxId, dodgerKey, limit, onDecide){
     var box=document.getElementById(boxId);
     var si=box.querySelector('.opt.si');
     var no=box.querySelector('.opt.no');
     var dodger=(dodgerKey==='si') ? si : no;
     var fixed=(dodgerKey==='si') ? no : si;
     var dodge=0;
-    var DODGE_LIMIT=3;
+    var DODGE_LIMIT=limit;
 
     function moveDodger(){
       dodge++;
@@ -414,10 +417,10 @@
     dodger.addEventListener('click', tryDodger);
   }
 
-  setupDodge('optsBox1', 'no', function(ans){
+  setupDodge('optsBox1', 'no', 2, function(ans){
     showStep(ans==='si' ? 'step5' : 'step4b');
   });
-  setupDodge('optsBox2', 'si', function(ans){
+  setupDodge('optsBox2', 'si', 3, function(ans){
     showStep(ans==='si' ? 'step4c' : 'step5');
   });
 </script>

@@ -35,13 +35,26 @@
   }
   body.landing{background:var(--verd)}
 
+  /* Capçalera interior (totes les pantalles excepte el login) */
+  .topbar{
+    display:none;
+    background:#fff;
+    padding:14px 18px;
+    align-items:center;
+    box-shadow:0 2px 6px rgba(0,0,0,.08);
+    position:sticky;top:0;z-index:10;
+  }
+  .topbar img{width:64px;height:64px;display:block}
+  body:not(.landing) .topbar{display:flex}
+
+  /* Logo gran flotant (nomes al login) */
   .logo-float{
+    display:none;
     text-align:center;
     padding-top:28px;
-    margin-bottom:-56px;
-    position:relative;
-    z-index:5;
+    margin-bottom:22px;
   }
+  body.landing .logo-float{display:block}
   .logo-float img{
     width:140px;height:140px;
     display:inline-block;
@@ -71,9 +84,6 @@
     background:#fff;border:1px solid var(--vora);border-radius:18px;
     padding:24px 22px;box-shadow:0 4px 18px rgba(0,0,0,.05);
     animation:pop .3s ease;
-    position:relative;z-index:1;
-    margin-top:56px;
-    padding-top:56px;
   }
   @keyframes pop{from{opacity:0;transform:translateY(8px)}to{opacity:1;transform:none}}
 
@@ -163,6 +173,10 @@
 </style>
 </head>
 <body class="landing">
+
+  <div class="topbar">
+    <img src="heart.gif" alt="cor">
+  </div>
 
   <div id="progress" style="display:none">
     <div class="steplabel" id="steplabel">Pas 1 de 3</div>
